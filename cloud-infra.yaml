@@ -1,0 +1,5 @@
+steps:
+# build image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/deployment-demonstrations/webapp', '-f', 'app/Dockerfile', 'app']
+  images: [ 'gcr.io/deployment-demonstrations/webapp' ]
