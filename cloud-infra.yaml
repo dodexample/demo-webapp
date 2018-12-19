@@ -2,4 +2,6 @@ steps:
 # build image
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/deployment-demonstrations/webapp', '-f', 'app/Dockerfile', 'app']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['deployment-manager','deployments', 'update' 'webapp-cluster' '--template' 'cluster.py' '--properties' 'zone:us-west2-a' ]
 images: [ 'gcr.io/deployment-demonstrations/webapp' ]
