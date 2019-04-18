@@ -1,0 +1,9 @@
+replicaCount: 3
+
+image:
+  repository: nginx
+  tag: stable
+
+ingress:
+  hosts: 
+    - prod-demo-webapp.dod.rocks
