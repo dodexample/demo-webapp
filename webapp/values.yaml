@@ -18,7 +18,6 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: traefik
     # kubernetes.io/tls-acme: "true"
-    dfarrell.local/mynote: some-note-here
   path: /
   hosts: 
     - demo-webapp.dod.rocks
