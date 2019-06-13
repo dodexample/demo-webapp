@@ -8,7 +8,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
   args: [  "-ec", 
-    "build -t us.gcr.io/$PROJECT_ID/$_GCR_PATH}:${SHORT_SHA} -t us.gcr.io/${PROJECT_ID}/$_GCR_PATH}:${BRANCH_NAME} -t ${_GCR_PATH} --cache-from us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${BRANCH_NAME}"
+    "build -t us.gcr.io/$PROJECT_ID/$_GCR_PATH}:${SHORT_SHA} -t us.gcr.io/${PROJECT_ID}/$_GCR_PATH}:${_BRANCH_TAG} -t ${_GCR_PATH} --cache-from us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${_BRANCH_TAG}"
   ]
 
 - name: 'gcr.io/cloud-builders/docker'
@@ -21,7 +21,7 @@ steps:
 
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
-  args: [ "-e", "-c", 'if [ "${_DESTROY}" != "destroy" ]; then for tag in ${SHORT_SHA} ${BRANCH_NAME}; do docker push us.gcr.io/${PROJECT_ID}/encounters:$tag; done; fi' ]
+  _args: [ "-e", "-c", 'for tag in ${SHORT_SHA} ${_BRANCH_TAG}; do docker push us.gcr.io/${PROJECT_ID}/encounters:$tag; done;' ]
 
 substitutions:
   _BRANCH_TAG: cleanfordockertag
