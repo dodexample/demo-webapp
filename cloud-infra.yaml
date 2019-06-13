@@ -5,6 +5,24 @@ steps:
   entrypoint: /bin/bash
   args: [ '-e', '-c', 'docker pull us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${_BRANCH_TAG} || exit 0; # ${BRANCH_NAME} ${COMMIT_SHA}' ]
 
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/bash
+  args: [  "-ec", 
+    "build -t us.gcr.io/$PROJECT_ID/$_GCR_PATH}:${SHORT_SHA} -t us.gcr.io/${PROJECT_ID}/$_GCR_PATH}:${BRANCH_NAME} -t ${_GCR_PATH} --cache-from us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${BRANCH_NAME}"
+  ]
+
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/bash
+  args: [ "-ec", "if test -f Dockerfile.test; then build -t ${_GCR_PATH}-test -f Dockerfile.test .; fi" ]
+
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/bash
+  args: [ "-ec", "if test -x test.sh; then ./test.sh; fi" ]
+
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/bash
+  args: [ "-e", "-c", 'if [ "${_DESTROY}" != "destroy" ]; then for tag in ${SHORT_SHA} ${BRANCH_NAME}; do docker push us.gcr.io/${PROJECT_ID}/encounters:$tag; done; fi' ]
+
 substitutions:
   _BRANCH_TAG: cleanfordockertag
   _GCR_PATH: imyapp
