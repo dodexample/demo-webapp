@@ -3,8 +3,8 @@ steps:
 
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
-  args: [ '-e', '-c', 'docker docker pull us.gcr.io/${PROJECT_ID}/${GCR_PATH}:${BRANCH_TAG} || exit 0; fi' ]
+  args: [ '-e', '-c', 'docker docker pull us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${_BRANCH_TAG} || exit 0; fi' ]
 
 substitutions:
-  BRANCH_TAG: cleanfordockertag
-  GCR_PATH: imyapp
+  _BRANCH_TAG: cleanfordockertag
+  _GCR_PATH: imyapp
