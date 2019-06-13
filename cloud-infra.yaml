@@ -1,5 +1,10 @@
 
 steps:
-# build image
+
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build' ]
+  entrypoint: /bin/bash
+  args: [ '-e', '-c', 'docker docker pull us.gcr.io/${PROJECT_ID}/${GCR_PATH}:${BRANCH_TAG} || exit 0; fi' ]
+
+substitutions:
+  - BRANCH_TAG=cleanfordockertag
+  - GCR_PATH=myapp
