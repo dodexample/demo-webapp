@@ -8,7 +8,7 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
   args: [  "-ec", 
-    "docker build -t us.gcr.io/$PROJECT_ID/$_GCR_PATH}:${SHORT_SHA} -t us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${_BRANCH_TAG} -t ${_GCR_PATH} --cache-from us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${_BRANCH_TAG}"
+    "docker build -t us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${SHORT_SHA} -t us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${_BRANCH_TAG} -t ${_GCR_PATH} --cache-from us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${_BRANCH_TAG}"
   ]
 
 - name: 'gcr.io/cloud-builders/docker'
