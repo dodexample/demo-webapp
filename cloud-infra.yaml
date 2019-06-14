@@ -8,21 +8,23 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
   args: [  "-ec", 
-    "docker build -t us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${SHORT_SHA} -t us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${_BRANCH_TAG} -t ${_GCR_PATH} --cache-from us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${_BRANCH_TAG}"
+    "docker build -t us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${SHORT_SHA} -t us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${_BRANCH_TAG} -t ${_GCR_PATH} --cache-from us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${_BRANCH_TAG} -f ${_DOCKERFILE} ${_DOCKERPATH}"
   ]
 
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
-  args: [ "-ec", "if test -f Dockerfile.test; then docker build -t ${_GCR_PATH}-test -f Dockerfile.test .; fi" ]
+  args: [ "-ec", "if test -f ${_TEST_DOCKERFILE}; then docker build -t ${_GCR_PATH}-test -f ${_TEST_DOCKERFILE} .; fi" ]
 
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
-  args: [ "-ec", "if test -x test.sh; then ./test.sh; fi" ]
+  args: [ "-ec", "if test -x ${_TEST_SCRIPT}; then ./test.sh; fi" ]
 
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
   _args: [ "-e", "-c", 'for tag in ${SHORT_SHA} ${_BRANCH_TAG}; do docker push us.gcr.io/${PROJECT_ID}/${_GRE_PATH}:$tag; done;' ]
 
 substitutions:
-  _BRANCH_TAG: cleanfordockertag
-  _GCR_PATH: imyapp
+  _DOCKERFILE: Dockerfile
+  _DOCKERPATH: .
+  _TEST_DOCKERFILE: Dockerfile.test
+  _TEST_SCRIPT: test.sh
