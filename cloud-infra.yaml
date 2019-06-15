@@ -25,6 +25,6 @@ steps:
 
 substitutions:
   _DOCKERFILE: Dockerfile
-  _DOCKERPATH: .
+  _DOCKERPATH: ./
   _TEST_DOCKERFILE: Dockerfile.test
   _TEST_SCRIPT: test.sh
