@@ -3,6 +3,10 @@ steps:
 
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
+  args: [ "-ec", "ls -la" ]
+
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: /bin/bash
   args: [ '-e', '-c', 'docker pull us.gcr.io/${PROJECT_ID}/${_GCR_PATH}:${_BRANCH_TAG} || exit 0; # ${BRANCH_NAME} ${COMMIT_SHA}' ]
 
 - name: 'gcr.io/cloud-builders/docker'
