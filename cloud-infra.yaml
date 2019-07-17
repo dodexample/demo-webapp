@@ -3,7 +3,7 @@ steps:
 
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
-  args: [ "-ec", "ls -la /workspace/dodexample-demo-webapp-*" ]
+  args: [ "-ec", "pwd; ls; ls -la /workspace/dodexample-demo-webapp-*" ]
 
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: /bin/bash
